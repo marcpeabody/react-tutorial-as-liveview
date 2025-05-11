@@ -12,7 +12,7 @@ defmodule TictactoeWeb.TicTacToeComponents do
   """
   def square(assigns) do
     ~H"""
-    <button class="square" phx-click="square-click" phx-value={@value}>
+    <button class="square" phx-click="square-click" phx-value-index={@index}>
       {@value}
     </button>
     """
@@ -21,19 +21,19 @@ defmodule TictactoeWeb.TicTacToeComponents do
   def board(assigns) do
     ~H"""
     <div class="board-row">
-      <.square value="1" />
-      <.square value="2" />
-      <.square value="3" />
+      <.square value={Enum.at(@board, 0)} index="0" />
+      <.square value={Enum.at(@board, 1)} index="1" />
+      <.square value={Enum.at(@board, 2)} index="2" />
     </div>
     <div class="board-row">
-      <.square value="4" />
-      <.square value="5" />
-      <.square value="6" />
+      <.square value={Enum.at(@board, 3)} index="3" />
+      <.square value={Enum.at(@board, 4)} index="4" />
+      <.square value={Enum.at(@board, 5)} index="5" />
     </div>
     <div class="board-row">
-      <.square value="7" />
-      <.square value="8" />
-      <.square value="9" />
+      <.square value={Enum.at(@board, 6)} index="6" />
+      <.square value={Enum.at(@board, 7)} index="7" />
+      <.square value={Enum.at(@board, 8)} index="8" />
     </div>
     """
   end

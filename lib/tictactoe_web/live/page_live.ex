@@ -3,20 +3,19 @@ defmodule TictactoeWeb.PageLive do
   import TictactoeWeb.TicTacToeComponents
 
   def mount(_params, _session, socket) do
-    {:ok, socket}
+    board = List.duplicate(nil, 9)
+    {:ok, assign_new(socket, :board, fn -> board end)}
   end
 
-  @impl true
-  def handle_event("square-click", _payload, socket) do
-
-    IO.inspect("CLICKED")
-    {:noreply, socket}
+  def handle_event("square-click", %{"index" => index}, socket) do
+    index = String.to_integer(index)
+    {:noreply, update(socket, :board, &List.replace_at(&1, index, "X"))}
   end
 
   def render(assigns) do
     ~H"""
     <div>
-      <.board />
+      <.board board={@board}/>
     </div>
     """
   end
