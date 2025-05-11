@@ -1,10 +1,23 @@
 import Config
 
+# Configure your database
+#
+# The MIX_TEST_PARTITION environment variable can be used
+# to provide built-in test partitioning in CI environment.
+# Run `mix help test` for more information.
+config :tictactoe, Tictactoe.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "tictactoe_test#{System.get_env("MIX_TEST_PARTITION")}",
+  pool: Ecto.Adapters.SQL.Sandbox,
+  pool_size: System.schedulers_online() * 2
+
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
-config :tic_tac_toe, TicTacToeWeb.Endpoint,
+config :tictactoe, TictactoeWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "FEa8FRTILdaSkJq2J8X+dxR85vXcW976oLPOIQg8W/qajvhvjamdQH/MaVgJ2TtU",
+  secret_key_base: "13ZppYD4cRCx2rBIQpv/PHQPbDC1Wmd5ro6HbUFCjvccFqSxOj1YOZZ5IwlQolgn",
   server: false
 
 # Print only warnings and errors during test

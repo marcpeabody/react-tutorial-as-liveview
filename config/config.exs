@@ -7,19 +7,42 @@
 # General application configuration
 import Config
 
-config :tic_tac_toe,
-  generators: [timestamp_type: :utc_datetime]
+config :tictactoe,
+  ecto_repos: [Tictactoe.Repo],
+  generators: [timestamp_type: :utc_datetime, binary_id: true]
 
 # Configures the endpoint
-config :tic_tac_toe, TicTacToeWeb.Endpoint,
+config :tictactoe, TictactoeWeb.Endpoint,
   url: [host: "localhost"],
   adapter: Bandit.PhoenixAdapter,
   render_errors: [
-    formats: [html: TicTacToeWeb.ErrorHTML, json: TicTacToeWeb.ErrorJSON],
+    formats: [html: TictactoeWeb.ErrorHTML, json: TictactoeWeb.ErrorJSON],
     layout: false
   ],
-  pubsub_server: TicTacToe.PubSub,
-  live_view: [signing_salt: "xc+TLhA5"]
+  pubsub_server: Tictactoe.PubSub,
+  live_view: [signing_salt: "ds8m8LGs"]
+
+# Configure esbuild (the version is required)
+config :esbuild,
+  version: "0.17.11",
+  tictactoe: [
+    args:
+      ~w(js/app.js --bundle --target=es2017 --outdir=../priv/static/assets --external:/fonts/* --external:/images/*),
+    cd: Path.expand("../assets", __DIR__),
+    env: %{"NODE_PATH" => Path.expand("../deps", __DIR__)}
+  ]
+
+# Configure tailwind (the version is required)
+config :tailwind,
+  version: "3.4.3",
+  tictactoe: [
+    args: ~w(
+      --config=tailwind.config.js
+      --input=css/app.css
+      --output=../priv/static/assets/app.css
+    ),
+    cd: Path.expand("../assets", __DIR__)
+  ]
 
 # Configures Elixir's Logger
 config :logger, :console,

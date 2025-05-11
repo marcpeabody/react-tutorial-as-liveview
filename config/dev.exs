@@ -1,20 +1,33 @@
 import Config
 
+# Configure your database
+config :tictactoe, Tictactoe.Repo,
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  database: "tictactoe_dev",
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
-config :tic_tac_toe, TicTacToeWeb.Endpoint,
+config :tictactoe, TictactoeWeb.Endpoint,
   # Binding to loopback ipv4 address prevents access from other machines.
   # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
   http: [ip: {127, 0, 0, 1}, port: 4000],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "1hXxJr2LdwS7+tG3GKRO03iTJWMvw1aGkAXBVCzH/CWOSafWxhk0OSK3qoiQ2Jev",
-  watchers: []
+  secret_key_base: "ddzM7rAaXrMQFLwrPOeEM1k64Swq+WKXroCxaQ6QuKAMyOIvDTrL+Kvljl+b/g9H",
+  watchers: [
+    esbuild: {Esbuild, :install_and_run, [:tictactoe, ~w(--sourcemap=inline --watch)]},
+    tailwind: {Tailwind, :install_and_run, [:tictactoe, ~w(--watch)]}
+  ]
 
 # ## SSL Support
 #
@@ -40,16 +53,17 @@ config :tic_tac_toe, TicTacToeWeb.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :tic_tac_toe, TicTacToeWeb.Endpoint,
+config :tictactoe, TictactoeWeb.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/(?!uploads/).*(js|css|png|jpeg|jpg|gif|svg)$",
-      ~r"lib/tic_tac_toe_web/(controllers|live|components)/.*(ex|heex)$"
+      ~r"priv/gettext/.*(po)$",
+      ~r"lib/tictactoe_web/(controllers|live|components)/.*(ex|heex)$"
     ]
   ]
 
 # Enable dev routes for dashboard and mailbox
-config :tic_tac_toe, dev_routes: true
+config :tictactoe, dev_routes: true
 
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
