@@ -9,7 +9,7 @@ defmodule TicTacToeWeb.PageLive do
   def render(assigns) do
     ~H"""
     <div>
-      <.square value="X" />
+      <.board />
     </div>
     """
   end

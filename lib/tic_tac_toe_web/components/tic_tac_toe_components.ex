@@ -17,4 +17,24 @@ defmodule TicTacToeWeb.TicTacToeComponents do
     </button>
     """
   end
+
+  def board(assigns) do
+    ~H"""
+    <div class="board-row">
+      <.square value="1" />
+      <.square value="2" />
+      <.square value="3" />
+    </div>
+    <div class="board-row">
+      <.square value="4" />
+      <.square value="5" />
+      <.square value="6" />
+    </div>
+    <div class="board-row">
+      <.square value="7" />
+      <.square value="8" />
+      <.square value="9" />
+    </div>
+    """
+  end
 end
